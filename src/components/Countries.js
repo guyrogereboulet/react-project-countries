@@ -12,6 +12,9 @@ const Countries = () => {
   //gestico i numero di paesi di visualizzare
   const [rangeValue, setRangeValue] = useState(40);
 
+  const [selectedRadio, setSelectedRadio]= useState('')
+  const radios = ['Africa', 'America', 'Asia', 'Europe', 'Oceania']
+
   //per loggare solo una volta lo state dobbiamo fare
   useEffect(() => {
 
@@ -44,10 +47,30 @@ const Countries = () => {
         setSortedData(sortedArray)
     };
     sortedCountry();
-  }, [data, playOnce]);
+  }, [data, rangeValue, playOnce]);
 
   return (
     <div className="countries">
+
+    <div className="sort-container">
+    <input type="range" min="1" max="250" value={rangeValue}
+    onchange={(e)=> setRangeValue(e.taget.value)}
+    
+    />
+
+    <ul>
+
+    {radios.map((radio)=> {
+      return (
+        <li key={radio}>
+        <input type="radio" value={radio} id={radio} />
+        <label htmlFor="{radio}">{radio}</label>
+        </li>
+
+      );
+    })}
+    </ul>
+    </div>
       <ul className="countries-list">
         {sortedData.map((country) => (
           /*Invio i dati di country nella card*/
