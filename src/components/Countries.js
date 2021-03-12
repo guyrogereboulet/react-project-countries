@@ -54,7 +54,7 @@ const Countries = () => {
 
     <div className="sort-container">
     <input type="range" min="1" max="250" value={rangeValue}
-    onchange={(e)=> setRangeValue(e.taget.value)}
+    onChange={(e)=> setRangeValue(e.target.value)}
     
     />
 
@@ -63,7 +63,12 @@ const Countries = () => {
     {radios.map((radio)=> {
       return (
         <li key={radio}>
-        <input type="radio" value={radio} id={radio} />
+        <input type="radio" value={radio} id={radio} 
+
+        checked= {radio == selectedRadio}
+        onChange={(e) => setSelectedRadio(e.target.value)}
+        
+        />
         <label htmlFor="{radio}">{radio}</label>
         </li>
 
@@ -71,8 +76,13 @@ const Countries = () => {
     })}
     </ul>
     </div>
+    <div className="cancel">
+    {selectedRadio && <h5 onClick={() => setSelectedRadio("")}>Annulla ricerca</h5>}
+    </div>
       <ul className="countries-list">
-        {sortedData.map((country) => (
+        {sortedData
+        .filter((country) => country.region.includes(selectedRadio))
+        .map((country) => (
           /*Invio i dati di country nella card*/
           /*è importante mettere una */
 
